@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useVibration } from "@baditaflorin/mesh-common";
 import { createRoomSync } from "../sync/yjsRoom";
 import { maybeFetchTurnCredentials } from "../sync/iceConfig";
 import { generateCard, isWin } from "./items";
@@ -16,6 +17,7 @@ export function Bingo({ roomId, myName }: Props) {
   const [claims, setClaims] = useState<Record<string, ClaimRec>>({});
   const [winner, setWinner] = useState<string | null>(null);
   const myId = useMemo(() => `${myName}|${crypto.randomUUID().slice(0, 6)}`, [myName]);
+  const haptic = useVibration();
 
   const mesh = useMemo(() => {
     if (!armed) return null;
@@ -76,7 +78,7 @@ export function Bingo({ roomId, myName }: Props) {
     if (item === "FREE") return;
     if (item in claims) return;
     mesh.yClaims.set(item, { by: myName, at: Date.now() });
-    if (navigator.vibrate) navigator.vibrate(15);
+    haptic.vibrate(15);
   };
 
   const onUnclaim = (item: string) => {
