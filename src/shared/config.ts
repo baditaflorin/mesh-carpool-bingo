@@ -1,6 +1,9 @@
 export const appConfig = {
   appName: "mesh-carpool-bingo",
   storagePrefix: "mesh-carpool-bingo",
+  description:
+    "Peer-to-peer mesh: road-trip bingo. Per-phone unique 5x5 cards, shared claim space across the car. First to a line wins.",
+  accentHex: "#5eff8a",
   version: __APP_VERSION__,
   commit: __GIT_COMMIT__,
   repositoryUrl: "https://github.com/baditaflorin/mesh-carpool-bingo",
