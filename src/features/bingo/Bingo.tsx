@@ -115,7 +115,7 @@ export function Bingo({ roomId, myName }: Props) {
     <div className="bingo-stage">
       <div className="bingo-hud">
         <span>{myName}</span>
-        <span>{Object.keys(claims).length} / 40 spotted</span>
+        <span>{Object.keys(claims).length} spotted in the car</span>
       </div>
 
       <div className="bingo-grid">
