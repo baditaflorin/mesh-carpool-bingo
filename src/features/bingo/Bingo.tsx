@@ -3,6 +3,7 @@ import { useVibration } from "@baditaflorin/mesh-common";
 import { createRoomSync } from "../sync/yjsRoom";
 import { maybeFetchTurnCredentials } from "../sync/iceConfig";
 import { generateCard, isWin } from "./items";
+import { appConfig } from "../../shared/config";
 
 type ClaimRec = { by: string; at: number };
 
@@ -11,12 +12,28 @@ type Props = {
   myName: string;
 };
 
+// Random 6-hex disambiguator so two players with the same name in the same
+// car get different cards (see docs/adr/0002-card-generation.md). It must be
+// generated once per device and persisted — not regenerated on every mount —
+// otherwise a page refresh (e.g. after a mobile reconnect in the car) hands
+// the player a brand-new, unrecognizable card and silently discards their
+// in-progress spotting on a still-live round.
+const PLAYER_SUFFIX_KEY = `${appConfig.storagePrefix}:playerSuffix`;
+
+function getOrCreatePlayerSuffix(): string {
+  const existing = localStorage.getItem(PLAYER_SUFFIX_KEY);
+  if (existing) return existing;
+  const created = crypto.randomUUID().slice(0, 6);
+  localStorage.setItem(PLAYER_SUFFIX_KEY, created);
+  return created;
+}
+
 export function Bingo({ roomId, myName }: Props) {
   const [armed, setArmed] = useState(false);
   const [card, setCard] = useState<string[]>([]);
   const [claims, setClaims] = useState<Record<string, ClaimRec>>({});
   const [winner, setWinner] = useState<string | null>(null);
-  const myId = useMemo(() => `${myName}|${crypto.randomUUID().slice(0, 6)}`, [myName]);
+  const myId = useMemo(() => `${myName}|${getOrCreatePlayerSuffix()}`, [myName]);
   const haptic = useVibration();
 
   const mesh = useMemo(() => {
