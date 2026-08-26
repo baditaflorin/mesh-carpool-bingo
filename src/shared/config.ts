@@ -1,5 +1,6 @@
 export const appConfig = {
   appName: "mesh-carpool-bingo",
+  breadcrumbs: false,
   storagePrefix: "mesh-carpool-bingo",
   description:
     "Peer-to-peer mesh: road-trip bingo. Per-phone unique 5x5 cards, shared claim space across the car. First to a line wins.",
