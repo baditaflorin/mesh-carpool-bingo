@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "app": "mesh-carpool-bingo",
+  "sourceCommit": "df1bdaf8874fb17013e62441f238eff0e3685f1f",
+  "releaseCommit": "df1bdaf8874fb17013e62441f238eff0e3685f1f",
+  "meshCommonCommit": "025f7ff72e50c4b54a3f4a2d8c88f4f600dec78f",
+  "recordedAt": "2026-08-26T21:10:30Z"
+}
